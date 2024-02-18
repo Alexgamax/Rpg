@@ -12,6 +12,10 @@ int main() {
         auxPlayer = player->getHealth();
         auxEnemy = enemy->getHealth();
 
+        cont++;
+        cout<<"\n\n\tTurno "<<cont<<"."<<endl;
+
+
         cout<<player->toString()<<endl;
         cout<<enemy->toString()<<endl;
 
@@ -20,17 +24,19 @@ int main() {
 
         cout<<"\n";
 
-        cout<<player->getName()<<" ha atacado a "<<enemy->getName()<<" con "<<auxEnemy - enemy->getHealth()<<" puntos de vida"<<endl;
-        cout<<enemy->getName()<<" ha atacado a "<<player->getName()<<" con "<<auxPlayer - player->getHealth()<<" puntos de vida"<<endl;
+        cout<<"\t"<<player->getName()<<" ha atacado a "<<enemy->getName()<<" con "<<auxEnemy - enemy->getHealth()<<" puntos de vida"<<endl;
+        cout<<"\t"<<enemy->getName()<<" ha atacado a "<<player->getName()<<" con "<<auxPlayer - player->getHealth()<<" puntos de vida"<<endl<<endl;
 
         cout<<"---------------------";
     }
 
-    cout<<player->toString()<<endl;
+    cout<<"\n"<<player->toString()<<endl;
     cout<<enemy->toString()<<endl;
 
-    if(auxPlayer <= 0) cout<<"\nEl jugador ha perdido."<<endl;
-    else cout<<"\nEl enemigo ha perdido."<<endl;
+    if(auxPlayer <= 0) cout<<"\n\tEl jugador ha perdido ";
+    else cout<<"\n\tEl enemigo ha perdido ";
+
+    cout<<"en "<<cont<<" turnos."<<endl;
 
     delete player;
     delete enemy;
