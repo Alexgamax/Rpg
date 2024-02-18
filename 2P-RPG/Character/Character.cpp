@@ -32,5 +32,5 @@ int Character::getSpeed() {
 }
 
 string Character::toString() {
-    return "\nVida actual: " + to_string(health);
+    return "\n\tVida actual: " + to_string(health);
 }
