@@ -143,5 +143,12 @@ CMakeFiles/rpg.dir/main.cpp.obj: C:\Users\Luis_\2P-RPG\main.cpp \
  D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/istream.tcc \
  C:\Users\Luis_\2P-RPG\Player/Player.h \
  C:/Users/Luis_/2P-RPG/Character/Character.h \
- C:\Users\Luis_\2P-RPG\Enemy/Enemy.h \
+ C:/Users/Luis_/2P-RPG/Enemy/Enemy.h \
+ C:/Users/Luis_/2P-RPG/Character/Character.h \
+ D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/vector \
+ D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_uninitialized.h \
+ D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_vector.h \
+ D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/stl_bvector.h \
+ D:/CLion\ 2023.3.4/bin/mingw/lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/bits/vector.tcc \
+ C:\Users\Luis_\2P-RPG\Combat/Combat.h \
  C:/Users/Luis_/2P-RPG/Character/Character.h
