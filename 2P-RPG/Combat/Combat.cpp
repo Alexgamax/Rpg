@@ -6,7 +6,6 @@
 #include <string>
 #include <iostream>
 #include <utility>
-#include <algorithm>
 
 using namespace std;
 
@@ -75,82 +74,62 @@ Character* Combat::getTarget(Character* attacker) {
 void Combat::doCombat() {
     cout<< "Inicio del combate" << endl;
     combatPrep();
-    while(participants.size() > 1){
+    int round = 1;
+    //Este while representa las rondas del combate
+    while(enemies.size() > 0 && partyMembers.size() > 0) {
+        cout<<"Round " << round << endl;
         vector<Character*>::iterator it = participants.begin();
-        while(it != participants.end()) {
-            Character* target = nullptr;
+        registerActions(it);
+        executeActions(it);
 
-            if((*it)->getActiveDefense()) {
-                (*it)->unDefend();
-                (*it)->setActiveDefense(false);
-            }
+        round++;
+    }
 
-            if((*it)->getIsPlayer()) {
-                int opc;
+    if(enemies.empty()) {
+        cout << "You win!" << endl;
+    } else {
+        cout << "You lose!" << endl;
 
-                cout<<"\nChoose your move."<<endl;
-                cout<<"1. Attack."<<endl;
-                cout<<"2. Defend."<<endl;
-                cout<<"Option:"; cin>>opc;
-                cout<<"\n";
+    }
+}
 
-                switch(opc){
-                    case 1:
-                        target = ((Player *) *it)->selectTarget(enemies);
-                        (*it)->doAttack(target);
-                        break;
+void Combat::executeActions(vector<Character*>::iterator participant) {
+    while(!actionQueue.empty()) {
+        Action currentAction = actionQueue.top();
+        currentAction.action();
+        actionQueue.pop();
 
-                    case 2:
-                        (*it)->defend();
-                        (*it)->setActiveDefense(true);
-                        cout<<((Player *) *it)->getName()<<" se ha defendido, ha aumentado su defensa en un 20%."<<endl;
-                        cout<<"Su defensa es: "<<(*it)->getDefense()<<endl<<endl;
-                        break;
-                }
-
-            } else {
-                int chance  = 1+rand()%(101-1);
-                // TODO: si el enemigo tiene menos del 15% de vida, hay una probabilidad del 40% de que se defienda
-                if((*it)->getHealth() < (*it)->getInitialHealth() * .55 && chance <= 40) {
-                    (*it)->defend();
-                    (*it)->setActiveDefense(true);
-                    cout<<(*it)->getName()<<" se ha defendido, ha aumentado su defensa en un 20%."<<endl;
-                    cout<<"Su defensa es: "<<(*it)->getDefense()<<endl<<endl;
-                } else {
-                    target = ((Enemy *) *it)->selectTarget(partyMembers);
-                    (*it)->doAttack(target);
-                }
-
-            }
-
-            if(target != nullptr) {
-                if(target->getHealth() <= 0){
-                    it = participants.erase(remove(participants.begin(), participants.end(), target), participants.end());
-                    if(target->getIsPlayer()){
-                        partyMembers.erase(remove(partyMembers.begin(), partyMembers.end(), target), partyMembers.end());
-                        if(partyMembers.size() == 0){
-                            cout << "Game Over" << endl;
-                            return;
-                        }
-                    } else {
-                        cout << "You killed enemy " << target->getName() << endl;
-                        enemies.erase(remove(enemies.begin(), enemies.end(), target), enemies.end());
-                        if(enemies.size() == 0){
-                            cout << "Victory" << endl;
-                            return;
-                        }
-                    }
-                } else {
-                    it++;
-                }
-            } else {
-                it++;
-            }
-
-
-
-
-
+        //Check if there are any dead characters
+        if(currentAction.target != NULL) {
+            checkParticipantStatus(*participant);
+            checkParticipantStatus(currentAction.target);
         }
+    }
+}
+
+void Combat::checkParticipantStatus(Character *participant) {
+    if(participant->getHealth() <= 0) {
+        if(participant->getIsPlayer()) {
+            partyMembers.erase(remove(partyMembers.begin(), partyMembers.end(), participant), partyMembers.end());
+        } else {
+            enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
+        }
+        participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());
+    }
+}
+
+void Combat::registerActions(vector<Character*>::iterator participantIterator) {
+    //Este while representa el turno de cada participante
+    //La eleccion que cada personaje elije en su turno
+    while(participantIterator != participants.end()) {
+        if((*participantIterator)->getIsPlayer()) {
+            Action playerAction = ((Player*) *participantIterator)->takeAction(enemies);
+            actionQueue.push(playerAction);
+        } else {
+            Action enemyAction = ((Enemy*) *participantIterator)->takeAction(partyMembers);
+            actionQueue.push(enemyAction);
+        }
+
+        participantIterator++;
     }
 }

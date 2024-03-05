@@ -19,13 +19,18 @@ void Player::doAttack(Character *target) {
 void Player::takeDamage(int damage) {
     int trueDamage = damage - defense;
 
-    if(trueDamage <= 0) {
-        cout<<name<<" no ha recibido danio."<<endl;
-    } else {
-        health-= trueDamage;
+    health-= trueDamage;
+
+    if(trueDamage > 0){
         cout << name << " took " << trueDamage << " damage!" << endl;
+    } else {
+        cout<< name << " didn't received damage." << endl;
     }
 
+
+    if(health <= 0) {
+        cout << name << " has been defeated!" << endl;
+    }
 }
 
 void Player::levelUp() {
@@ -50,4 +55,43 @@ Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
     //TODO: Add input validation
     cin >> selectedTarget;
     return possibleTargets[selectedTarget];
+}
+
+Action Player::takeAction(vector<Enemy*> enemies) {
+    int action = 0;
+    cout << "Select an action: " << endl
+    << "1. Attack" << endl
+    << "2. Defend" << endl;
+
+    //TODO: Validate input
+    cin >> action;
+    Action currentAction;
+    Character* target = nullptr;
+
+    // Se reinicia la defensa cada que le toca volver a elegir
+
+    undefend();
+
+    switch(action) {
+        case 1:
+            target = selectTarget(enemies);
+            currentAction.target = target;
+            currentAction.action = [this, target](){
+                doAttack(target);
+            };
+            currentAction.speed = getSpeed();
+            break;
+        case 2:
+            currentAction.action = [this]() {
+                defend();
+            };
+            currentAction.speed = getSpeed();
+            break;
+        default:
+            cout << "Invalid action" << endl;
+            break;
+
+    }
+
+    return currentAction;
 }

@@ -20,14 +20,12 @@ void Enemy::doAttack(Character *target) {
 
 void Enemy::takeDamage(int damage) {
     int trueDamage = damage - defense;
+    health-= trueDamage;
 
-    if(trueDamage <= 0) {
-        cout<<name<<" no ha recibido danio."<<endl;
-    } else {
-        health-= trueDamage;
-        cout << name << " took " << trueDamage << " damage!" << endl;
+    cout << name << " took " << trueDamage << " damage!" << endl;
+    if(health <= 0) {
+        cout << name << " has been defeated!" << endl;
     }
-
 }
 
 int Enemy::getExperience() {
@@ -45,4 +43,29 @@ Character* Enemy::selectTarget(vector<Player*> possibleTargets) {
         }
     }
     return target;
+}
+
+Action Enemy::takeAction(vector<Player*> partyMembers) {
+    int chance  = 1+rand()%(101-1);
+    Action currentAction;
+    currentAction.speed = getSpeed();
+
+    undefend();
+
+    //Si la vida del enemigo está por debajo del 55 por ciento, hay un 70 por ciento que se defienda
+    if(getHealth() < getInitialHealth() * .55 && chance <= 70){
+        currentAction.action = [this]() {
+            defend();
+        };
+    } else {
+        Character* target = selectTarget(partyMembers);
+        currentAction.target = target;
+        currentAction.action = [this, target](){
+            doAttack(target);
+        };
+
+
+    }
+    return currentAction;
+
 }

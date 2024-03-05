@@ -3,10 +3,7 @@
 //
 
 #include "Character.h"
-#include<iostream>
-
-using namespace std;
-
+#include <iostream>
 Character::Character(string _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
     name = _name;
     health = _health;
@@ -38,6 +35,26 @@ int Character::getDefense() {
     return defense;
 }
 
+int Character::getInitialDefense() {
+    return initialDefense;
+}
+
+void Character::defend() {
+
+    cout<<getName()<<" se ha defendido, su defensa ha aumentado un 20%"<<endl;
+
+
+    defenseActive = true;
+    defense += (initialDefense * .2);
+
+    cout<<"Su defensa es: "<<defense<<endl;
+}
+
+void Character::undefend() {
+
+    defense = initialDefense;
+}
+
 int Character::getSpeed() {
     return speed;
 }
@@ -48,23 +65,6 @@ string Character::toString() {
 
 bool Character::getIsPlayer() {
     return isPlayer;
-}
-
-bool Character::getActiveDefense() {
-    return activeDefense;
-}
-
-void Character::setActiveDefense(bool defending) {
-    activeDefense = defending;
-}
-
-void Character::defend() {
-
-    defense += (defense * .2);
-}
-
-void Character::unDefend() {
-    defense = initialDefense;
 }
 
 bool Character::flee(Character*target) {
