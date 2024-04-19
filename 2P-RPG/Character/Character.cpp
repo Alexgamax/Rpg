@@ -4,8 +4,10 @@
 
 #include "Character.h"
 #include <iostream>
-Character::Character(string _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
-    name = _name;
+#include <string.h>
+
+Character::Character(char _name[], int _health, int _attack, int _defense, int _speed, bool _isPlayer) {
+    strcpy(name, _name);
     health = _health;
     initialHealth = _health;
     attack = _attack;
@@ -13,10 +15,6 @@ Character::Character(string _name, int _health, int _attack, int _defense, int _
     initialDefense = _defense;
     speed = _speed;
     isPlayer = _isPlayer;
-}
-
-string Character::getName() {
-    return name;
 }
 
 int Character::getHealth() {
@@ -41,7 +39,7 @@ int Character::getInitialDefense() {
 
 void Character::defend() {
 
-    cout<<getName()<<" se ha defendido, su defensa ha aumentado un 20%"<<endl;
+    cout<<name<<" se ha defendido, su defensa ha aumentado un 20%"<<endl;
 
 
     defenseActive = true;
@@ -60,7 +58,8 @@ int Character::getSpeed() {
 }
 
 string Character::toString() {
-    return "Name: " + name + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
+    cout<<"Name : "<<name<<endl;
+    return "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
 }
 
 bool Character::getIsPlayer() {

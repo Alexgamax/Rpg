@@ -7,7 +7,7 @@
 
 using namespace std;
 
-Player::Player(string _name, int _health, int _attack, int _defense, int _speed) : Character(_name, _health, _attack, _defense, _speed, true) {
+Player::Player(char _name[], int _health, int _attack, int _defense, int _speed) : Character(_name, _health, _attack, _defense, _speed, true) {
     level = 1;
     experience = 0;
 }
@@ -49,7 +49,8 @@ Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
     int selectedTarget = 0;
     cout << "Select a target: " << endl;
     for (int i = 0; i < possibleTargets.size(); i++) {
-        cout << i << ". " << possibleTargets[i]->getName() << endl;
+        cout << i << ". ";
+        possibleTargets[i]->printName();
     }
 
     //TODO: Add input validation

@@ -5,12 +5,12 @@
 #include "Enemy.h"
 #include "../Utils.h"
 #include <iostream>
-
+#include <string.h>
 
 using namespace std;
 using namespace combat_utils;
 
-Enemy::Enemy(string _name, int _health, int _attack, int _defense, int _speed, int _experience) : Character(_name, _health, _attack, _defense, _speed, false) {
+Enemy::Enemy(char _name[], int _health, int _attack, int _defense, int _speed, int _experience) : Character(_name, _health, _attack, _defense, _speed, false) {
     experience = _experience;
 }
 
@@ -68,4 +68,11 @@ Action Enemy::takeAction(vector<Player*> partyMembers) {
     }
     return currentAction;
 
+}
+
+void Enemy::printName() {
+    for (int i=0;i<strlen(name);i++){
+        cout<<name[i];
+    }
+    cout<<endl;
 }

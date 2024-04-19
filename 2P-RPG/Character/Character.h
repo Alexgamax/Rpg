@@ -10,7 +10,7 @@ using namespace std;
 
 class Character {
 protected:
-    string name;
+    char name[30];
     int health;
     int attack;
     int initialHealth;
@@ -20,7 +20,7 @@ protected:
     bool isPlayer;
     bool defenseActive = false;
 public:
-    Character(string _name, int _health, int _attack, int _defense, int _speed, bool _isPlayer);
+    Character(char _name[], int _health, int _attack, int _defense, int _speed, bool _isPlayer);
 
     virtual void doAttack(Character *target) = 0;
     virtual void takeDamage(int damage) = 0;
@@ -28,9 +28,7 @@ public:
     //TODO: Implementar metodo de defensa
     //Incrementar la defensa un 20% solo por el turno actual
 
-
     bool flee(Character* target);
-    string getName();
     int getHealth();
     int getInitialHealth();
     int getAttack();
