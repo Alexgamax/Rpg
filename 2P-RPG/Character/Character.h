@@ -31,13 +31,17 @@ public:
     bool flee(Character* target);
     int getHealth();
     int getInitialHealth();
+    void upInitialHealth(int newStat);
     int getAttack();
+    void upAttack(int newStat);
     int getDefense();
+    void upDefense(int newStat);
     void defend();
     void undefend();
-    int getInitialDefense();
+    void upInitialDefense(int newStat);
     bool getIsPlayer();
     int getSpeed();
+    void upSpeed(int newStat);
     string toString();
 };
 

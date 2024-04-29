@@ -87,6 +87,7 @@ void Combat::doCombat() {
 
     if(enemies.empty()) {
         cout << "You win!" << endl;
+        cout<<" Your stats: \n"<<partyMembers[0]->toString()<<endl;
     } else {
         cout << "You lose!" << endl;
 
@@ -112,6 +113,7 @@ void Combat::checkParticipantStatus(Character *participant) {
         if(participant->getIsPlayer()) {
             partyMembers.erase(remove(partyMembers.begin(), partyMembers.end(), participant), partyMembers.end());
         } else {
+            
             enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
         }
         participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());

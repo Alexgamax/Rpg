@@ -21,20 +21,34 @@ int Character::getHealth() {
     return health;
 }
 
+void Character::upInitialHealth(int newStat) {
+    initialHealth = newStat + initialHealth;
+
+    cout<<"Su vida maxima ha aumentado en: "<<newStat<<endl;
+}
+
 int Character::getInitialHealth() {
     return initialHealth;
+}
+
+void Character::upAttack(int newStat) {
+    attack = newStat + attack;
+
+    cout<<"Su ataque ha aumentado en: "<<newStat<<endl;
 }
 
 int Character::getAttack() {
     return attack;
 }
 
-int Character::getDefense() {
-    return defense;
+void Character::upDefense(int newStat) {
+    defense = newStat + defense;
+
+
 }
 
-int Character::getInitialDefense() {
-    return initialDefense;
+int Character::getDefense() {
+    return defense;
 }
 
 void Character::defend() {
@@ -53,12 +67,24 @@ void Character::undefend() {
     defense = initialDefense;
 }
 
+void Character::upInitialDefense(int newStat) {
+    initialDefense = newStat + initialDefense;
+
+    cout<<"Su defensa maxima ha aumentado en: "<<newStat<<endl;
+}
+
+void Character::upSpeed(int newStat) {
+    speed = newStat + speed;
+
+    cout<<"Su velocidad ha aumentado en: "<<newStat<<endl;
+}
+
 int Character::getSpeed() {
     return speed;
 }
 
 string Character::toString() {
-    cout<<"Name : "<<name<<endl;
+    cout<<"Name : "<<name;
     return "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
 }
 

@@ -34,7 +34,34 @@ void Player::takeDamage(int damage) {
 }
 
 void Player::levelUp() {
+    int opc;
+    cout<<"\n\tHas subido de nivel!"<<endl;
     level++;
+    cout<<"\tSu nivel es: "<<level<<endl<<endl;
+
+    cout<<"\t1. Ataque."<<endl;
+    cout<<"\t2. Defensa."<<endl;
+    cout<<"\t3. Vida Maxima."<<endl;
+    cout<<"\t4. Velocidad."<<endl;
+    cout<<"\tElija una stat para aumentar: "; cin>>opc;
+
+    switch (opc)
+    {
+    case 1:
+        upAttack(1);
+        break;
+    case 2:
+        upInitialDefense(1);
+        break;
+    case 3:
+        upInitialHealth(1);
+        break;
+    case 4:
+        upSpeed(1);
+        break;
+    default:
+        break;
+    }
 }
 
 void Player::gainExperience(int exp) {
@@ -79,6 +106,9 @@ Action Player::takeAction(vector<Enemy*> enemies) {
             currentAction.target = target;
             currentAction.action = [this, target](){
                 doAttack(target);
+                if(target->getHealth()<=0){
+                    gainExperience(((Enemy*)target)->getExperience());
+                }
             };
             currentAction.speed = getSpeed();
             break;
