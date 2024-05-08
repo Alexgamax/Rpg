@@ -21,10 +21,14 @@ int Character::getHealth() {
     return health;
 }
 
+void Character::upHealth(int newStat){
+    health += newStat;
+}
+
 void Character::upInitialHealth(int newStat) {
     initialHealth = newStat + initialHealth;
 
-    cout<<"Su vida maxima ha aumentado en: "<<newStat<<endl;
+    cout<<name<<" su vida maxima ha aumentado en: "<<newStat<<endl;
 }
 
 int Character::getInitialHealth() {
@@ -34,7 +38,7 @@ int Character::getInitialHealth() {
 void Character::upAttack(int newStat) {
     attack = newStat + attack;
 
-    cout<<"Su ataque ha aumentado en: "<<newStat<<endl;
+    cout<<name<<" su ataque ha aumentado en: "<<newStat<<endl;
 }
 
 int Character::getAttack() {
@@ -43,8 +47,6 @@ int Character::getAttack() {
 
 void Character::upDefense(int newStat) {
     defense = newStat + defense;
-
-
 }
 
 int Character::getDefense() {
@@ -54,7 +56,6 @@ int Character::getDefense() {
 void Character::defend() {
 
     cout<<name<<" se ha defendido, su defensa ha aumentado un 20%"<<endl;
-
 
     defenseActive = true;
     defense += (initialDefense * .2);
@@ -70,13 +71,13 @@ void Character::undefend() {
 void Character::upInitialDefense(int newStat) {
     initialDefense = newStat + initialDefense;
 
-    cout<<"Su defensa maxima ha aumentado en: "<<newStat<<endl;
+    cout<<name<<" su defensa maxima ha aumentado en: "<<newStat<<endl;
 }
 
 void Character::upSpeed(int newStat) {
     speed = newStat + speed;
 
-    cout<<"Su velocidad ha aumentado en: "<<newStat<<endl;
+    cout<<name<<" su velocidad ha aumentado en: "<<newStat<<endl;
 }
 
 int Character::getSpeed() {
@@ -85,7 +86,7 @@ int Character::getSpeed() {
 
 string Character::toString() {
     cout<<"Name : "<<name;
-    return "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
+    return "\nMax Health: " + to_string(initialHealth) + "\nHealth: " + to_string(health) + "\nAttack: " + to_string(attack) + "\nDefense: " + to_string(defense) + "\nSpeed: " + to_string(speed);
 }
 
 bool Character::getIsPlayer() {

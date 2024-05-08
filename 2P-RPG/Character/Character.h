@@ -30,6 +30,7 @@ public:
 
     bool flee(Character* target);
     int getHealth();
+    void upHealth(int newStat);
     int getInitialHealth();
     void upInitialHealth(int newStat);
     int getAttack();

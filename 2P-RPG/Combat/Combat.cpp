@@ -72,22 +72,23 @@ Character* Combat::getTarget(Character* attacker) {
 }
 
 void Combat::doCombat() {
-    cout<< "Inicio del combate" << endl;
+    cout<< "\n----Inicio del combate----" << endl << endl;
     combatPrep();
     int round = 1;
     //Este while representa las rondas del combate
     while(enemies.size() > 0 && partyMembers.size() > 0) {
-        cout<<"Round " << round << endl;
+        cout<<"\tRound " << round << endl;
         vector<Character*>::iterator it = participants.begin();
         registerActions(it);
         executeActions(it);
+        cout<<endl;
 
         round++;
     }
 
     if(enemies.empty()) {
         cout << "You win!" << endl;
-        cout<<" Your stats: \n"<<partyMembers[0]->toString()<<endl;
+        cout<<"Your stats:\n"<<partyMembers[0]->toString()<<endl;
     } else {
         cout << "You lose!" << endl;
 
@@ -113,7 +114,6 @@ void Combat::checkParticipantStatus(Character *participant) {
         if(participant->getIsPlayer()) {
             partyMembers.erase(remove(partyMembers.begin(), partyMembers.end(), participant), partyMembers.end());
         } else {
-            
             enemies.erase(remove(enemies.begin(), enemies.end(), participant), enemies.end());
         }
         participants.erase(remove(participants.begin(), participants.end(), participant), participants.end());

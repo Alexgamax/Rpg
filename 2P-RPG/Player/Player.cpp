@@ -43,7 +43,7 @@ void Player::levelUp() {
     cout<<"\t2. Defensa."<<endl;
     cout<<"\t3. Vida Maxima."<<endl;
     cout<<"\t4. Velocidad."<<endl;
-    cout<<"\tElija una stat para aumentar: "; cin>>opc;
+    cout<<"\tElija una stat para aumentar:"; cin>>opc;
 
     switch (opc)
     {
@@ -52,9 +52,11 @@ void Player::levelUp() {
         break;
     case 2:
         upInitialDefense(1);
+            upDefense(1);
         break;
     case 3:
         upInitialHealth(1);
+        upHealth(1);
         break;
     case 4:
         upSpeed(1);
@@ -74,25 +76,24 @@ void Player::gainExperience(int exp) {
 
 Character* Player::selectTarget(vector<Enemy*> possibleTargets) {
     int selectedTarget = 0;
-    cout << "Select a target: " << endl;
+    cout<<endl;
     for (int i = 0; i < possibleTargets.size(); i++) {
         cout << i << ". ";
         possibleTargets[i]->printName();
     }
-
+    cout << "Select a target:"; cin >> selectedTarget;
     //TODO: Add input validation
-    cin >> selectedTarget;
+    cout<<endl;
     return possibleTargets[selectedTarget];
 }
 
 Action Player::takeAction(vector<Enemy*> enemies) {
     int action = 0;
-    cout << "Select an action: " << endl
-    << "1. Attack" << endl
-    << "2. Defend" << endl;
-
+    cout << "1. Attack" << endl
+    << "2. Defend" << endl
+    << "Select an action:"; cin >> action;
     //TODO: Validate input
-    cin >> action;
+
     Action currentAction;
     Character* target = nullptr;
 
@@ -104,10 +105,18 @@ Action Player::takeAction(vector<Enemy*> enemies) {
         case 1:
             target = selectTarget(enemies);
             currentAction.target = target;
-            currentAction.action = [this, target](){
+            currentAction.action = [this, target, enemies](){
                 doAttack(target);
                 if(target->getHealth()<=0){
-                    gainExperience(((Enemy*)target)->getExperience());
+                    Enemy* enemigo = ((Enemy*)target);
+                    gainExperience(enemigo->getExperience());
+                    if(enemigo->getExperience() + experience >= 100){
+                        for (int i = 0; i < enemies.size(); i++) {
+                            if(enemies[i]->getId() != enemigo->getId() && enemies.size() > 1) {
+                                enemies[i]->upAttack(1);
+                            }
+                        }
+                    }
                 }
             };
             currentAction.speed = getSpeed();
@@ -125,4 +134,8 @@ Action Player::takeAction(vector<Enemy*> enemies) {
     }
 
     return currentAction;
+}
+
+char* serialize() {
+
 }

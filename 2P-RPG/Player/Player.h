@@ -25,6 +25,7 @@ public:
     void takeDamage(int damage) override;
     Character* selectTarget(vector<Enemy*> possibleTargets);
     Action takeAction(vector<Enemy*> enemies);
+    char* serialize();
 
     void gainExperience(int exp);
 
