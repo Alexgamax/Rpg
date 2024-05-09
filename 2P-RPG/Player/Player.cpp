@@ -12,6 +12,11 @@ Player::Player(char _name[], int _health, int _attack, int _defense, int _speed)
     experience = 0;
 }
 
+Player::Player(char *_name, int _health, int _attack, int _defense, int _speed, bool _isPlayer, int _level, int _experience) : Character(_name, _health, _attack, _defense, _speed, _isPlayer){
+    level = _level;
+    experience = _experience;
+}
+
 void Player::doAttack(Character *target) {
     target->takeDamage(attack);
 }
@@ -136,6 +141,88 @@ Action Player::takeAction(vector<Enemy*> enemies) {
     return currentAction;
 }
 
-char* serialize() {
+char* Player::serialize() {
+    char* iterator = buffer;
 
+    memcpy(iterator, &name, sizeof(name));
+    iterator += sizeof(name);
+
+    memcpy(iterator, &health, sizeof(health));
+    iterator += sizeof(health);
+
+    memcpy(iterator, &attack, sizeof(attack));
+    iterator += sizeof(attack);
+
+    memcpy(iterator, &initialHealth, sizeof(initialHealth));
+    iterator += sizeof(initialHealth);
+
+    memcpy(iterator, &defense, sizeof(defense));
+    iterator += sizeof(defense);
+
+    memcpy(iterator, &initialDefense, sizeof(initialDefense));
+    iterator += sizeof(initialDefense);
+
+    memcpy(iterator,&speed , sizeof(speed));
+    iterator += sizeof(speed);
+
+    memcpy(iterator, &isPlayer, sizeof(isPlayer));
+    iterator += sizeof(isPlayer);
+
+    memcpy(iterator, &defenseActive, sizeof(defenseActive));
+    iterator += sizeof(defenseActive);
+
+    memcpy(iterator, &level, sizeof(level));
+    iterator += sizeof(level);
+
+    memcpy(iterator, &experience, sizeof(experience));
+
+    return buffer;
+}
+
+Player* Player::unserialize(char* buffer) {
+    char* iterator = buffer;
+    char name[30];
+    int health, attack, initialHealth, defense, initialDefense, speed, level, experience;
+    bool isPlayer, defenseActive;
+
+    memcpy(&name, iterator, sizeof(name));
+    iterator+=sizeof(name);
+
+    memcpy(&health, iterator, sizeof(health));
+    iterator+=sizeof(health);
+
+    memcpy(&attack, iterator, sizeof(attack));
+    iterator+=sizeof(attack);
+
+    memcpy(&initialHealth, iterator, sizeof(initialHealth));
+    iterator+=sizeof(initialHealth);
+
+    memcpy(&defense, iterator, sizeof(defense));
+    iterator+=sizeof(defense);
+
+    memcpy(&initialDefense, iterator, sizeof(initialDefense));
+    iterator+=sizeof(initialDefense);
+
+    memcpy(&speed, iterator, sizeof(speed));
+    iterator+=sizeof(speed);
+
+    memcpy(&level, iterator, sizeof(level));
+    iterator+=sizeof(level);
+
+    memcpy(&experience, iterator, sizeof(experience));
+    iterator+=sizeof(experience);
+
+    memcpy(&isPlayer, iterator, sizeof(isPlayer));
+    iterator+=sizeof(isPlayer);
+
+    memcpy(&defenseActive, iterator, sizeof(defenseActive));
+    iterator+=sizeof(defenseActive);
+
+    memcpy(&level, iterator, sizeof(level));
+    iterator+=sizeof(level);
+
+    memcpy(&experience, iterator, sizeof(experience));
+    iterator+=sizeof(experience);
+
+    return new Player(name, health, attack, defense, speed, isPlayer, level, experience);
 }
