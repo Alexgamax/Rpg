@@ -19,6 +19,7 @@ private:
     int experience;
 
     void levelUp();
+    void saveProgress();
 public:
     Player(char _name[], int _health, int _attack, int _defense, int _speed);
     Player(char _name[], int _health, int _attack, int _defense, int _speed, bool isPlayer, int level, int experience);

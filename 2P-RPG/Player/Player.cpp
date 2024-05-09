@@ -4,8 +4,17 @@
 
 #include "Player.h"
 #include <iostream>
+#include "../Files/FileHandler.h"
 
 using namespace std;
+
+void saveProgress(){
+    char* buffer = this->serialize();
+
+    FileHandler writeHandler();
+
+    writeHandler.writeToFile("PlayerInfo.data", buffer, Player::BUFFER_SIZE);
+}
 
 Player::Player(char _name[], int _health, int _attack, int _defense, int _speed) : Character(_name, _health, _attack, _defense, _speed, true) {
     level = 1;
@@ -96,6 +105,7 @@ Action Player::takeAction(vector<Enemy*> enemies) {
     int action = 0;
     cout << "1. Attack" << endl
     << "2. Defend" << endl
+    << "3. Save Player Progress" << endl
     << "Select an action:"; cin >> action;
     //TODO: Validate input
 
@@ -114,7 +124,6 @@ Action Player::takeAction(vector<Enemy*> enemies) {
                 doAttack(target);
                 if(target->getHealth()<=0){
                     Enemy* enemigo = ((Enemy*)target);
-                    gainExperience(enemigo->getExperience());
                     if(enemigo->getExperience() + experience >= 100){
                         for (int i = 0; i < enemies.size(); i++) {
                             if(enemies[i]->getId() != enemigo->getId() && enemies.size() > 1) {
@@ -122,6 +131,7 @@ Action Player::takeAction(vector<Enemy*> enemies) {
                             }
                         }
                     }
+                    gainExperience(enemigo->getExperience());
                 }
             };
             currentAction.speed = getSpeed();
@@ -132,8 +142,13 @@ Action Player::takeAction(vector<Enemy*> enemies) {
             };
             currentAction.speed = getSpeed();
             break;
+        case 3:
+            saveProgress();
+            return takeAction(enemies);
+            break;
         default:
             cout << "Invalid action" << endl;
+            return takeAction(enemies);
             break;
 
     }
